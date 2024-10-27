@@ -2,9 +2,7 @@ import 'package:e_com_app/controller/data_provider.dart';
 import 'package:e_com_app/controller/home_provider.dart';
 import 'package:e_com_app/utils/constants.dart';
 import 'package:e_com_app/utils/theme.dart';
-import 'package:e_com_app/view/cart%20screen/cart_screen.dart';
-import 'package:e_com_app/view/detail%20screen/detail_screen.dart';
-import 'package:e_com_app/view/home%20screen/home_screen.dart';
+import 'package:e_com_app/view/splash%20screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -44,7 +42,7 @@ class EComApp extends StatelessWidget {
     return MaterialApp(
       theme: AppTheme.lightTheme,
       debugShowCheckedModeBanner: false,
-      home: const HomeScreen(),
+      home: const SplashScreen(),
     );
   }
 }

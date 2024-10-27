@@ -2,6 +2,8 @@ import 'package:e_com_app/controller/data_provider.dart';
 import 'package:e_com_app/controller/home_provider.dart';
 import 'package:e_com_app/utils/constants.dart';
 import 'package:e_com_app/utils/theme.dart';
+import 'package:e_com_app/view/cart%20screen/cart_screen.dart';
+import 'package:e_com_app/view/detail%20screen/detail_screen.dart';
 import 'package:e_com_app/view/home%20screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +13,7 @@ void main() async {
   DataProvider dataProvider = DataProvider();
   HomeProvider homeProvider = HomeProvider();
   await dataProvider.convertJson();
-  homeProvider.productModel = dataProvider.productModel;
+  homeProvider.productList = dataProvider.productModel.productList;
   homeProvider.getOfferProductList();
   homeProvider.getNewArrivalList();
 

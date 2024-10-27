@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../../../model/product_model.dart';
 import '../../../utils/color_list.dart';
+import '../../detail screen/detail_screen.dart';
 
 class ProductGridViewList extends StatelessWidget {
   const ProductGridViewList({
@@ -50,68 +51,91 @@ class GridProductBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(
-        horizontal: defaultPadding / 2,
-      ),
-      alignment: Alignment.bottomCenter,
-      decoration: BoxDecoration(
-        color: product.bgColor,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Stack(
+
+    var homeProviderF = Provider.of<HomeProvider>(context, listen: false);
+
+    return CupertinoButton(
+      onPressed: (){
+        homeProviderF.setProductId(product.id - 1);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const DetailScreen(),
+          ),
+        );
+      },
+      padding: EdgeInsets.zero,
+      child: Container(
+        margin: const EdgeInsets.symmetric(
+          horizontal: defaultPadding / 2,
+        ),
         alignment: Alignment.bottomCenter,
-        children: [
-          // IMAGE
-          Align(
-            alignment: Alignment.topCenter,
-            child: SizedBox(
-              height: height * 0.1,
-              width: width * 0.5,
-              child: Image.network(
-                product.images[0],
-                fit: BoxFit.contain,
-              ),
-            ),
-          ),
-
-          Align(
-            alignment: Alignment.topRight,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: CupertinoButton(
-                onPressed: (){},
-                padding: EdgeInsets.zero,
-                child: BlurryContainer(
-                    blur: 5,
-                    elevation: 0,
-                    color: Colors.white.withOpacity(0.4),
-                    padding: const EdgeInsets.all(0),
-                    borderRadius: BorderRadius.circular(100),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: defaultPadding / 2, vertical: defaultPadding / 2),
-                      child: Icon(
-                        Icons.favorite_border_rounded,
-                      ),
-                    )),
-              ),
-            ),
-          ),
-
-          BlurryContainer(
-              blur: 5,
-              elevation: 0,
-              color: Colors.white.withOpacity(0.4),
-              padding: const EdgeInsets.all(0),
-              borderRadius:
-                  const BorderRadius.vertical(bottom: Radius.circular(20)),
+        decoration: BoxDecoration(
+          color: product.bgColor,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            // IMAGE
+            Align(
+              alignment: Alignment.topCenter,
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: defaultPadding, vertical: defaultPadding / 2),
-                child: BottomDetails(product: product),
-              )),
-        ],
+                padding: const EdgeInsets.only(top: defaultPadding),
+                child: SizedBox(
+                  height: height * 0.1,
+                  width: width * 0.5,
+                  child: Image.network(
+                    product.images[0],
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+            ),
+
+            Align(
+              alignment: Alignment.topRight,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CupertinoButton(
+                  onPressed: (){
+
+                    homeProviderF.toggleFavorite(product.id);
+
+                  },
+                  padding: EdgeInsets.zero,
+                  child: BlurryContainer(
+                      blur: 5,
+                      elevation: 0,
+                      color: Colors.white.withOpacity(0.4),
+                      padding: const EdgeInsets.all(0),
+                      borderRadius: BorderRadius.circular(100),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: defaultPadding / 2, vertical: defaultPadding / 2),
+                        child: Icon(
+                          !product.isFavourite ? Icons.favorite_border_rounded : Icons.favorite_rounded,
+                          color: !product.isFavourite ? Colors.black : Colors.redAccent,
+                        ),
+                      )),
+                ),
+              ),
+            ),
+
+            BlurryContainer(
+                blur: 5,
+                elevation: 0,
+                color: Colors.white.withOpacity(0.4),
+                padding: const EdgeInsets.all(0),
+                borderRadius:
+                    const BorderRadius.vertical(bottom: Radius.circular(20)),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: defaultPadding, vertical: defaultPadding / 2),
+                  child: BottomDetails(product: product),
+                )),
+          ],
+        ),
       ),
     );
   }

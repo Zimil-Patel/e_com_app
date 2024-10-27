@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../explore screen/components/bottom_procced_button.dart';
-import '../explore screen/components/pricing_details.dart';
-import '../explore screen/components/promo_code_box.dart';
+import '../../utils/constants.dart';
+import 'components/bottom_procced_button.dart';
+import 'components/pricing_details.dart';
+import 'components/promo_code_box.dart';
 import 'components/cart_product_list.dart';
 import 'components/cart_top_bar.dart';
 

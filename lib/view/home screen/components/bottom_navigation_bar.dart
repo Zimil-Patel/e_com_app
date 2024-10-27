@@ -36,18 +36,18 @@ class BottomNavigationBarCustom extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CupertinoButton(
-                  child: const Icon(Icons.explore),
+                  child: const Icon(Icons.explore, color: Colors.black,),
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const ExploreScreen(),
+                        builder: (context) => const ExploreScreen(category: "All"),
                       ),
                     );
                   },
                 ),
                 CupertinoButton(
-                  child: const Icon(Icons.shopping_cart),
+                  child: const Icon(Icons.shopping_cart, color: Colors.black,),
                   onPressed: () {
                     Navigator.push(
                       context,

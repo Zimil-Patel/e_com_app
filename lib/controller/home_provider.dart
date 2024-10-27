@@ -6,6 +6,8 @@ class HomeProvider extends ChangeNotifier {
   late ProductModel productModel;
   List<Products> offerProducts = [];
   List<Products> newArrivalList = [];
+  List<Products> categoryList = [];
+  List<Products> cartList = [];
 
   // Get offer product list
   getOfferProductList(){
@@ -26,17 +28,17 @@ class HomeProvider extends ChangeNotifier {
   }
 
   // getCategoryList
-  List<Products> getCategoryList(String category){
-    if (category == 'All'){
-      return productModel.productList;
+  getCategoryList(String value){
+    value = value.toLowerCase();
+    categoryList.clear();
+    if (value == 'all'){
+      categoryList.addAll(productModel.productList);
     } else {
-      List<Products> newList = [];
       for (var product in productModel.productList){
-        if (product.category == category){
-          newList.add(product);
+        if (product.category == value){
+          categoryList.add(product);
         }
       }
-      return newList;
     }
   }
 

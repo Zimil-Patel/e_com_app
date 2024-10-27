@@ -30,7 +30,7 @@ class ProductModel {
 
 class Products {
   //KEY DATATYPES
-  int id, stock, weight, minimumOrderQuantity;
+  int id, stock, weight, minimumOrderQuantity, quantity;
   bool isFavourite, isInCart;
   Color bgColor;
   String title,
@@ -54,6 +54,7 @@ class Products {
     required this.stock,
     required this.weight,
     required this.minimumOrderQuantity,
+    this.quantity = 0,
     this.isFavourite = false,
     this.isInCart = false,
     required this.bgColor,

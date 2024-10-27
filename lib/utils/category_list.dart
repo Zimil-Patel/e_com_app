@@ -1,6 +1,6 @@
 List<String> categoryList = [
   'Beauty',
-  'Grocery',
+  'Groceries',
   'Furniture',
   'fragrances',
 ];

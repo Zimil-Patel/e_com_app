@@ -8,10 +8,18 @@ class AppTheme{
     textTheme: TextTheme(
       titleLarge: GoogleFonts.ptSans(
         fontWeight: FontWeight.bold,
-        color: Colors.black,
       ),
-      titleMedium: GoogleFonts.ptSans(
+      titleMedium: GoogleFonts.bonaNova(
         fontWeight: FontWeight.w600,
+      ),
+      bodyMedium: GoogleFonts.varelaRound(
+        fontWeight: FontWeight.w600,
+      ),
+      bodyLarge: GoogleFonts.varelaRound(
+        fontWeight: FontWeight.w600,
+      ),
+      bodySmall: GoogleFonts.varelaRound(
+        fontWeight: FontWeight.w500,
       ),
     ),
   );

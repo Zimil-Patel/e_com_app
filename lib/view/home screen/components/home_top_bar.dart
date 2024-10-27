@@ -10,9 +10,11 @@ class HomeTopBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: defaultPadding,
-        vertical: defaultPadding,
+      padding: EdgeInsets.only(
+        left: defaultPadding,
+        right: defaultPadding,
+        top: height * 0.055,
+        bottom: defaultPadding,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

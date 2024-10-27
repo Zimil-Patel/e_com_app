@@ -1,26 +1,56 @@
-import 'package:flutter/material.dart';
 
+import 'package:e_com_app/controller/data_provider.dart';
+import 'package:e_com_app/controller/home_provider.dart';
+import 'package:e_com_app/utils/constants.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'components/bottom_navigation_bar.dart';
+import 'components/category_list_row.dart';
 import 'components/home_top_bar.dart';
+import 'components/new_arrivals_column.dart';
+import 'components/offer_product_row.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var dataProviderT = Provider.of<DataProvider>(context);
+    var homeProviderT = Provider.of<HomeProvider>(context);
+    var dataProviderF = Provider.of<DataProvider>(context, listen: false);
+    var homeProviderF = Provider.of<HomeProvider>(context, listen: false);
+
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            // GREET USER, GRID ICON, PROFILE
-            HomeTopBar(),
-            
-            Row(
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Serum'),
+                // GREET USER, GRID ICON, PROFILE
+                const HomeTopBar(),
+
+                // CATEGORY LIST
+                const CategoryListRow(),
+
+                // DISCOUNT
+                const OfferProductRow(),
+
+
+                // NEW ARRIVAL SECTION
+                const NewArrivalsColumn(),
+
+                SizedBox(
+                  height: height * 0.2,
+                ),
               ],
             ),
-          ],
-        ),
+          ),
+
+          // NAVIGATION BAR FOR FAVORITE, EXPLORE, CART
+          const BottomNavigationBarCustom(),
+        ],
       ),
     );
   }

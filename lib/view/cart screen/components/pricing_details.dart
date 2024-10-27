@@ -1,5 +1,8 @@
 import 'package:e_com_app/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../controller/home_provider.dart';
 
 class PricingDetails extends StatelessWidget {
   const PricingDetails({
@@ -8,6 +11,17 @@ class PricingDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
+    var homeProviderT = Provider.of<HomeProvider>(context);
+    var homeProviderF = Provider.of<HomeProvider>(context, listen: false);
+
+    homeProviderF.calculateBagTotal();
+
+    double subTotal = homeProviderT.subTotal;
+    double bagTotal = homeProviderT.bagTotal;
+    double shipping = homeProviderT.shipping;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -21,9 +35,9 @@ class PricingDetails extends StatelessWidget {
         ),
 
         // SUBTOTAL
-        const LabelPriceRow(
+        LabelPriceRow(
           label: 'Subtotal',
-          price: 45.99,
+          price: subTotal,
         ),
 
         const Divider(
@@ -33,7 +47,7 @@ class PricingDetails extends StatelessWidget {
         ),
 
         // SHIPPING
-        const LabelPriceRow(label: 'Shipping', price: 4.99),
+        LabelPriceRow(label: 'Shipping', price: shipping),
 
         const Divider(
           endIndent: defaultPadding * 3,
@@ -42,7 +56,7 @@ class PricingDetails extends StatelessWidget {
         ),
 
         // BagTotal
-        const LabelPriceRow(label: 'Bag Total', price: 50.98, showItemCount: true,),
+        LabelPriceRow(label: 'Bag Total', price: bagTotal, showItemCount: true,),
 
         SizedBox(
           height: height * 0.2,
@@ -87,7 +101,7 @@ class LabelPriceRow extends StatelessWidget {
 
 
           Text(
-            '\$ $price USD',
+            '\$ ${price.toStringAsFixed(2)} USD',
             style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                   fontWeight: FontWeight.w900,
                 ),

@@ -1,3 +1,4 @@
+
 import 'package:e_com_app/controller/home_provider.dart';
 import 'package:e_com_app/view/detail%20screen/components/ProductImageBox.dart';
 import 'package:flutter/material.dart';

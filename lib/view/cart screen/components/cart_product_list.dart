@@ -1,8 +1,13 @@
-import 'package:e_com_app/utils/color_list.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:e_com_app/view/cart%20screen/components/remove_button.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../../controller/home_provider.dart';
+import '../../../model/product_model.dart';
 import '../../../utils/constants.dart';
+import 'add_button.dart';
+import 'image_box.dart';
+import 'minus_button.dart';
 
 class CartProductList extends StatelessWidget {
   const CartProductList({
@@ -11,11 +16,15 @@ class CartProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    var homeProviderT = Provider.of<HomeProvider>(context);
+
+
     return Column(
       children: [
         ...List.generate(
-          10,
-          (index) => const CartProductBox(),
+          homeProviderT.cartList.length,
+          (index) => CartProductBox(index: index,),
         ),
       ],
     );
@@ -24,11 +33,16 @@ class CartProductList extends StatelessWidget {
 
 class CartProductBox extends StatelessWidget {
   const CartProductBox({
-    super.key,
+    super.key, required this.index,
   });
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
+
+    var homeProviderT = Provider.of<HomeProvider>(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: defaultPadding,
@@ -36,33 +50,28 @@ class CartProductBox extends StatelessWidget {
       ),
       child: SizedBox(
         width: width,
-        child: const Row(
+        child: Row(
           children: [
 
             // IMAGE
-            Row(
-              children: [
-                ImageBox(),
+            ImageBox(product: homeProviderT.cartList[index],),
 
-                SizedBox(
-                  width: defaultPadding,
-                ),
-
-
-                // PRODUCT DETAILS
-                ProductDetails(),
-              ],
+            const SizedBox(
+              width: defaultPadding,
             ),
 
-            Spacer(),
+
+            // PRODUCT DETAILS
+            Expanded(child: ProductDetails(product: homeProviderT.cartList[index],)),
+
 
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 // REMOVE ITEM BUTTON
-                RemoveItemButton(),
+                RemoveItemButton(product: homeProviderT.cartList[index], index: index),
 
-                SizedBox(
+                const SizedBox(
                   height: defaultPadding * 2,
                 ),
 
@@ -70,21 +79,21 @@ class CartProductBox extends StatelessWidget {
                 Row(
                   children: [
                     // MINUS QUANTITY BUTTON
-                    MinusButton(),
+                    MinusButton(product: homeProviderT.cartList[index], index: index,),
 
-                    SizedBox(
+                    const SizedBox(
                       width: defaultPadding,
                     ),
 
                     // QUANTITY COUNT
-                    Text('5'),
+                    Text('${homeProviderT.cartList[index].quantity}'),
 
-                    SizedBox(
+                    const SizedBox(
                       width: defaultPadding,
                     ),
 
                     // ADD QUANTITY BUTTON
-                    AddButton(),
+                    AddButton(product: homeProviderT.cartList[index], index: index,),
                   ],
                 ),
               ],
@@ -98,8 +107,10 @@ class CartProductBox extends StatelessWidget {
 
 class ProductDetails extends StatelessWidget {
   const ProductDetails({
-    super.key,
+    super.key, required this.product,
   });
+
+  final Products product;
 
   @override
   Widget build(BuildContext context) {
@@ -107,17 +118,17 @@ class ProductDetails extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // TITLE
-        const Text(
-          'product.title',
+        Text(
+          product.title,
           overflow: TextOverflow.ellipsis,
           maxLines: 2,
         ),
 
         // DESCRIPTION
         Text(
-          'product.description',
+          product.description,
           overflow: TextOverflow.ellipsis,
-          maxLines: 1,
+          maxLines: 2,
           style: Theme.of(context).textTheme.bodySmall,
         ),
 
@@ -127,7 +138,7 @@ class ProductDetails extends StatelessWidget {
 
         // PRICE
         Text(
-          '\$ 9.99',
+          '\$ ${product.price}',
           overflow: TextOverflow.ellipsis,
           style: Theme.of(context).textTheme.bodyMedium!,
         ),
@@ -136,118 +147,4 @@ class ProductDetails extends StatelessWidget {
   }
 }
 
-class ImageBox extends StatelessWidget {
-  const ImageBox({
-    super.key,
-  });
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: height * 0.08,
-      width: height * 0.08,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(14),
-        color: bgColorList[0],
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.4),
-            offset: const Offset(6, 6),
-            blurRadius: 20,
-          ),
-        ],
-        image: const DecorationImage(
-          image: NetworkImage(
-              'https://cdn.dummyjson.com/products/images/groceries/Fish%20Steak/1.png'),
-        ),
-      ),
-    );
-  }
-}
-
-class RemoveItemButton extends StatelessWidget {
-  const RemoveItemButton({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return CupertinoButton(
-      padding: EdgeInsets.zero,
-      child: Container(
-        padding: const EdgeInsets.all(defaultPadding / 2),
-        decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-        ),
-        child: Icon(
-          Icons.close,
-          color: Colors.grey,
-          size: height * 0.016,
-        ),
-      ),
-      onPressed: () {},
-    );
-  }
-}
-
-class AddButton extends StatelessWidget {
-  const AddButton({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return CupertinoButton(
-      padding: EdgeInsets.zero,
-      child: Container(
-        padding: const EdgeInsets.all(defaultPadding / 2),
-        decoration: BoxDecoration(
-          color: Colors.black,
-          shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.6),
-              offset: const Offset(2, 2),
-              blurRadius: 10,
-            ),
-          ],
-        ),
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
-          size: height * 0.014,
-        ),
-      ),
-      onPressed: () {},
-    );
-  }
-}
-
-class MinusButton extends StatelessWidget {
-  const MinusButton({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return CupertinoButton(
-      padding: EdgeInsets.zero,
-      child: Container(
-        padding: const EdgeInsets.all(defaultPadding / 2),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          shape: BoxShape.circle,
-          border: Border.all(
-            color: Colors.grey.withOpacity(0.5),
-          ),
-        ),
-        child: Icon(
-          Icons.remove,
-          color: Colors.black,
-          size: height * 0.014,
-        ),
-      ),
-      onPressed: () {},
-    );
-  }
-}

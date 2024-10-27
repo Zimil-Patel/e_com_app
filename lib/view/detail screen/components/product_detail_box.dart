@@ -1,12 +1,11 @@
-import 'package:e_com_app/controller/home_provider.dart';
 import 'package:e_com_app/model/product_model.dart';
 import 'package:e_com_app/view/detail%20screen/components/ReviewBox.dart';
 import 'package:e_com_app/view/detail%20screen/components/tags_row.dart';
 import 'package:e_com_app/view/detail%20screen/components/title_des_and_rating.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../utils/constants.dart';
+import 'meta_info.dart';
 import 'dimension_details.dart';
 import 'general_info_row.dart';
 
@@ -100,6 +99,8 @@ class ProductDetailBox extends StatelessWidget {
                 ],
               ),
             ),
+
+        MetaInfo(product: product),
 
             // BOTTOM PADDING
             SizedBox(

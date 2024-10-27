@@ -1,5 +1,8 @@
+import 'package:e_com_app/controller/home_provider.dart';
+import 'package:e_com_app/view/cart%20screen/cart_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../model/product_model.dart';
 import '../../../utils/constants.dart';
@@ -14,6 +17,9 @@ class AddToCartButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    var homeProviderF = Provider.of<HomeProvider>(context, listen: false);
+
     return Align(
       alignment: Alignment.bottomCenter,
       child: Padding(
@@ -21,7 +27,13 @@ class AddToCartButton extends StatelessWidget {
             vertical: height * 0.060, horizontal: width * 0.12),
         child: CupertinoButton(
           padding: EdgeInsets.zero,
-          onPressed: (){},
+          onPressed: (){
+            if (product.isInCart){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const CartScreen(),),);
+            } else {
+              homeProviderF.addToCart(product.id);
+            }
+          },
           child: SizedBox(
             height: 60,
             child: Container(

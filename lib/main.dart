@@ -1,4 +1,7 @@
 import 'package:e_com_app/controller/data_provider.dart';
+import 'package:e_com_app/utils/constants.dart';
+import 'package:e_com_app/utils/theme.dart';
+import 'package:e_com_app/view/home%20screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,13 +27,15 @@ class EComApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+
+    height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
+
+    return MaterialApp(
+      theme: AppTheme.lightTheme,
+      themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+      home: const HomeScreen(),
     );
   }
 }

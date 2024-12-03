@@ -1,7 +1,7 @@
-
 import 'package:e_com_app/controller/data_provider.dart';
 import 'package:e_com_app/controller/home_provider.dart';
 import 'package:e_com_app/utils/constants.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,42 +16,42 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var dataProviderT = Provider.of<DataProvider>(context);
     var homeProviderT = Provider.of<HomeProvider>(context);
-    var dataProviderF = Provider.of<DataProvider>(context, listen: false);
-    var homeProviderF = Provider.of<HomeProvider>(context, listen: false);
 
     return Scaffold(
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      body: homeProviderT.productList.isNotEmpty
+          ? Stack(
               children: [
-                // GREET USER, GRID ICON, PROFILE
-                const HomeTopBar(),
+                SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // GREET USER, GRID ICON, PROFILE
+                      const HomeTopBar(),
 
-                // CATEGORY LIST
-                const CategoryListRow(),
+                      // CATEGORY LIST
+                      const CategoryListRow(),
 
-                // DISCOUNT
-                const OfferProductRow(),
+                      // DISCOUNT
+                      const OfferProductRow(),
 
+                      // NEW ARRIVAL SECTION
+                      const NewArrivalsColumn(),
 
-                // NEW ARRIVAL SECTION
-                const NewArrivalsColumn(),
-
-                SizedBox(
-                  height: height * 0.2,
+                      SizedBox(
+                        height: height * 0.2,
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
-          ),
 
-          // NAVIGATION BAR FOR FAVORITE, EXPLORE, CART
-          const BottomNavigationBarCustom(),
-        ],
-      ),
+                // NAVIGATION BAR FOR FAVORITE, EXPLORE, CART
+                const BottomNavigationBarCustom(),
+              ],
+            )
+          : const Center(
+              child: CupertinoActivityIndicator(),
+            ),
     );
   }
 }
